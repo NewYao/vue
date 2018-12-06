@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+	</head>
+	<style>
+        .router-link-active,
+        .my-active-class{
+            color: blue;
+            font-weight: 800;
+            font-style: italic;
+         }
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(100px);
+        }
+ 
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 0.5s ease;
+        }
+	</style>
+	<body>
+		<div id="app">
+			<!-- <a href="#/login">登录</a>
+			<a href="#/register">注册</a> -->
+            <p>
+            <!-- 默认是a标签-->
+            <router-link to="/login/11/王武" >登录</RouterLink>
+            <!-- 加入tag后可以选择渲染为什么标签-->
+            <router-link to="/register">注册</RouterLink>
+            </p>
+            <!-- 加入动画-->
+            <transition mode="out-in">
+            <!-- 占位符，如果路由匹配到相关规则则会在router-view中展示-->
+			<router-view></router-view>
+            </transtition>
+		</div>
+		<script src="js/vue-2.4.0.js"></script>
+		<script src="js/vue-resource-1.3.4.js" type="text/javascript" charset="utf-8"></script>
+		<!-- 安装router模块 在vue之后导入-->
+		<script src="js/vue-router.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			var login = {
+				template: '<h2>登录-----{{$route.params.id}}----{{$route.params.name}}</h2>',
+                created(){//组件钩子声明函数
+                    console.log(this.$route.params)
+                }
+			}
+			var register = {
+				template: '<h2>注册</h2>'
+			}
+			var routerObj = new VueRouter({
+                //传入参数,定义的跳转组件和key
+				routes: [,//路由匹配规则
+                    {path:"/",redirect:'/login/ / '},//设置初始化显示的组件
+                    {path: "/login/:id/:name",component: login},//后面只能用组件对象
+					{path: "/register",component: register}
+				],
+                linkActiveClass:'my-active-class'//配置自定义激活类名,点击路由时选中的按钮系统添加的类
+			})
+			var nr = new Vue({
+				el: '#app',
+				data: {
+
+				},
+				methods: {
+
+				},
+                router: routerObj//注册路由
+			})
+		</script>
+	</body>
+</html>

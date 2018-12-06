@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+	</head>
+	<style>
+	</style>
+	<body>
+		<div id="app">
+            <input type="button" value="按钮" @click="show"/>
+            <mycom ref="ss"></mycom>
+		</div>
+        <template id="mycom">
+            <h2>子组件</h2>
+        </template>
+		<script src="js/vue-2.4.0.js"></script>
+		<script>
+            var mycom ={
+                data(){
+                    return{
+                        name:'江心屿'
+                    }
+                },
+                
+                template:'#mycom',
+                methods:{
+                    add(){
+                        console.log('子组件的方法')
+                    }
+                }
+            }
+			var nr = new Vue({
+				el: '#app',
+				data: {
+					
+				},
+				methods: {
+					show(){
+                        console.log('父组件的方法');
+                        console.log(this.$refs.ss.name)
+                        this.$refs.ss.add();
+                    }
+				},
+                components:{
+                    mycom
+                }
+			})
+		</script>
+	</body>
+</html>
