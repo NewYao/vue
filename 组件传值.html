@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+	</head>
+	<style>
+	</style>
+	<body>
+		<div id="app">
+            <com2  v-bind:parentmsg="msg"></com2>
+		</div>
+		<script src="js/vue-2.4.0.js"></script>
+		<script>
+			var nr = new Vue({
+				el: '#app',
+				data: {
+					msg:'父组件的值'
+				},
+				methods: {
+					show(data){
+                        console.log('父组件的show方法'+data);
+                    }
+				},
+                components:{
+                    com2:{
+                        data(){//子组件中的data数据为自身私有的,比如通过ajax请求回来的数据,可读可写
+                            return{
+                                title:123,
+                                name:'王座'
+                            }
+                        },
+                        template:'<h1>这是子组件----{{parentmsg}}{{name}}</h1>',
+                        props:['parentmsg'],//把父组件传递过来的值现在prop数组中定义一下,这样才能使用,数据 只读
+                        directives:{},
+                        filters:{},
+                        components:{}
+                    }
+                }
+			})
+		</script>
+	</body>
+</html>

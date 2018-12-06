@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+	</head>
+	<body>
+		<div id="app">
+			<input type="button" value="post提交" @click="dopost" />
+		</div>
+		<script src="js/vue-2.4.0.js"></script>
+		<script src="js/vue-resource-1.3.4.js"></script>
+		<script>
+			var nr = new Vue({
+				el:'#app',
+				data:{
+					
+				},
+				methods:{
+					dopost(){
+						this.$http.post('http://www.koncord.com.cn/ZHDJ/LessonSer?OperClassify=1&fun=1',{},{}).then(result=>{
+							console.log(result.body);
+						})
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

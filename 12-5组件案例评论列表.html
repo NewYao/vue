@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+	</head>
+	<style>
+	</style>
+	<body>
+		<div id="app">
+			<tttt @add="add"></tttt>
+			<ul class="list-group" v-for="item in list" :key="item.id">
+				<li class="list-group-item">
+					{{item.content}}
+					<span class="badge">评论人：{{item.user}}</span>
+				</li>
+			</ul>
+		</div>
+		<template id="tmpl">
+			<div class="container">
+				<div class="form-group">
+					<label>添加人</label>
+					<input type="text" class="form-control" v-model="user">
+				</div>
+				<div class="form-group">
+					<label>内容</label>
+					<textarea  class="form-control" v-model="content"></textarea>
+				</div>
+				<div class="form-group">
+					<input type="button" class=" btn btn-primary" @click="add" value="添加">
+				</div>
+			</div>
+            
+		</template>
+		<script src="js/vue-2.4.0.js"></script>
+		<script>
+			var tttt = {
+                data() {
+                    return{
+                        user:'',
+                        content:'',
+                    }
+                },
+				template: '#tmpl',
+                methods:{
+                    add(){
+                    	this.$emit('add',this.user,this.content);
+                    }
+                }
+			}
+			var nr = new Vue({
+				el: '#app',
+				data: {
+					list: [{
+							id: Date.now(),
+							user: '李白',
+							content: '床前明月光'
+						},
+						{
+							id: Date.now(),
+							user: '韩信',
+							content: '疑似地上霜'
+						},
+						{
+							id: Date.now(),
+							user: '白居易',
+							content: '举头望明月'
+						},
+						{
+							id: Date.now(),
+							user: '杜甫',
+							content: '低头思故乡'
+						},
+					]
+				},
+				methods: {
+                   add(user,content){
+                   	this.list.push({id: Date.now(),user: user,content:content})
+                   }
+				},
+				components: {
+					tttt
+				}
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>Vue实测</title>
+	<style>
+		[v-clock] {
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="app">
+		<p v-clock>{{meg}}</p>
+		<button v-bind:title="mytitle">按钮</button>
+		<button @click="show">开始</button>
+		<button @click="stop">停止</button>
+		<a href="http://www.baidu.com" taglib="_blank" @click.once="baidu">跳转至百度</a>
+	</div>
+	<div id="cal">
+		<input type="text" v-model="no1" />
+		<select v-model="opt">
+			<option value="+">+</option>
+			<option value="-">-</option>
+			<option value="*">*</option>
+			<option value="/">/</option>
+		</select>
+		<input type="text" v-model="no2" />
+		<input type="button" value="计算" @click='ca'/>
+		<input type="text" v-model="result" />
+		<p v-for="cont in 10">{{cont}}</p>
+
+	</div>
+	<script src="js/vue.min.js"></script>
+	<script>
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				meg: '测试Vue自定义的title',
+				mytitle: '自定义的title',
+				showSetInt: null
+			},
+			methods: {
+				show() {
+					if (this.showSetInt != null) {
+						return
+					};
+					this.showSetInt = setInterval(() => {
+						//console.log(this.meg);
+						var end = this.meg.substring(0, 1);
+						var start = this.meg.substring(1);
+						this.meg = start + end;
+					}, 300)
+
+				},
+				stop() {
+					//	alert('aa');
+					clearInterval(this.showSetInt)
+					this.showSetInt = null;
+				},
+				baidu() {
+					console.log('触发百度');
+				}
+			},
+
+		})
+		var vv = new Vue({
+			el: '#cal',
+			data: {
+				no1: 0,
+				opt: '+',
+				no2: 0,
+				result: 0
+			},
+			methods: {
+				ca() {
+					var str = 'parseInt(this.no1) '+ this.opt + ' parseInt(this.no2)';
+					this.result = eval(str);
+				}
+			}
+		})
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<script src="js/vue-2.4.0.js"></script>
+        <script src="js/vue-resource-1.3.4.js"></script>
+        <link href="css/animate.css" />
+	</head>
+	<body>
+		<div id="app">
+            <input type="button" class="btn-success" value="动画" @click="flag=!flag"/>
+            <div class="animated bounceIn" >
+            	<h3 v-if="flag">这是一个H3</h3>
+            </div>
+			<button @click="postInfo">发送POST请求</button>
+			<ul>
+                <transition-group enter-active-class="fadeInRightBig" leave-active-class="fadeOutRightBig" :duration="{leave:300}">
+                    <li v-for="item in list" :key="item.BT">
+                        {{item.BT}}<br/>
+                        {{item.ADDTIME}}<br/>
+                        {{item.ORG_NAME}}
+                    </li>
+                </transition-group>
+
+            </ul>
+
+            <audio src="http://www.koncord.com.cn:80/zhdj_source/org/voice/2018_11_01_17_31_58_2571541064734382.mp3"></audio>
+		</div>
+		<script>
+            
+			new Vue({
+				el:'#app',
+				data:{		
+                    flag:false,
+					list:[]
+				},
+				methods:{
+					postInfo(){
+                        this.$http.post('http://www.koncord.com.cn/ZHDJ/MsgcSer',{'OperClassify':2,'fun':1,'currentPage':1,'showCount':10},{emulateJSON:true}).then(
+                        function(res){
+                            console.log(res.body);
+                            if(res.data.returnCode==200){
+                                this.list =res.data.rows;
+                            }else{
+                                
+                            }
+                        })
+                    }
+				}
+			})
+		</script>
+	</body>
+</html
